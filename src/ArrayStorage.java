@@ -7,9 +7,7 @@ public class ArrayStorage {
     int size;
 
     void clear() {
-        for (int i = 0; i < size; i++) {
             size = 0;
-        }
     }
 
     void save(Resume r) {
