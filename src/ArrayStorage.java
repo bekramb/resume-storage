@@ -23,6 +23,7 @@ public class ArrayStorage {
             if (uuid.equals(storage[i].uuid)) {
                 r = storage[i];
                 break;
+
             }
         }
         return r;
