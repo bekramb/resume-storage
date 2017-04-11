@@ -4,42 +4,36 @@
 
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    int size;
 
     void clear() {
-        for (int i = 0; i <storage.length ; i++) {
-            storage[i] = null;
-        }
+            size = 0;
     }
 
     void save(Resume r) {
-        for (int i = 0; i < storage.length ; i++) {
-            if (storage[i]== null){
-                storage[i] = r;
-                break;
-            }
+        if (size <= storage.length) {
+            storage[size] = r;
+            size++;
         }
     }
 
     Resume get(String uuid) {
         Resume r = null;
-        for (int i = 0; i < storage.length ; i++) {
-            if(storage[i] != null){
-                if (uuid.equals(storage[i].uuid)) {
-                    r = storage[i];
-                    break;
-                }
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                r = storage[i];
+                break;
             }
         }
         return r;
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < storage.length ; i++) {
-            if(storage[i] != null) {
-                if (uuid.equals(storage[i].uuid)) {
-                    storage[i] = null;
-                    break;
-                }
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                System.arraycopy(storage, i+1, storage, i, size - i);
+                size--;
+                break;
             }
         }
     }
@@ -48,25 +42,15 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] arr = new Resume[size()];
-        int index = 0;
-        for (int i = 0; i < storage.length; i++) {
-            if(storage[i]!= null){
-                arr[index] = storage[i];
-                index++;
-            }
+        Resume[] arr = new Resume[size];
+        for (int i = 0; i < size; i++) {
+            arr[i] = storage[i];
         }
         return arr;
     }
 
     int size() {
-        int count = 0;
-        for (int i = 0; i < storage.length ; i++) {
-            if (storage[i] != null){
-                count++;
-            }
-        }
-        return count;
+        return size;
     }
 }
 
