@@ -7,7 +7,7 @@ public class ArrayStorage {
     int size;
 
     void clear() {
-            size = 0;
+         size = 0;
     }
 
     void save(Resume r) {
@@ -23,7 +23,6 @@ public class ArrayStorage {
             if (uuid.equals(storage[i].uuid)) {
                 r = storage[i];
                 break;
-
             }
         }
         return r;
