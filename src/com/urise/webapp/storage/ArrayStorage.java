@@ -2,15 +2,16 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
-    private int size;
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void clear() {
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -25,17 +26,6 @@ public class ArrayStorage {
         }else{
             System.out.println("Resume with such uuid already exists!");
         }
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        Resume r = null;
-        if (index != -1) {
-            r = storage[index];
-        }else{
-            System.out.println("There is no resume with such uuid");
-        }
-        return r;
     }
 
     public void update(Resume r) {
@@ -68,9 +58,6 @@ public class ArrayStorage {
         return arr;
     }
 
-    public int size() {
-        return size;
-    }
 
     /**
      * @param uuid
@@ -78,9 +65,6 @@ public class ArrayStorage {
      */
     public int getIndex(String uuid) {
         int index = -1;
-        if (null == uuid || uuid.isEmpty()){
-            return index;
-        }
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 index = i;
