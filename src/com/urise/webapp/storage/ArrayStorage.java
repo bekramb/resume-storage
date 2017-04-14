@@ -5,33 +5,24 @@ import com.urise.webapp.model.Resume;
 /**
  * Array based storage for Resumes
  */
-
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void save(Resume r) {
-        if (getIndex(r.getUuid()) == -1) {
-            if (size <= storage.length) {
-                storage[size] = r;
-                size++;
-            }else{
-                System.out.println("Storage is full!");
-            }
-        }else{
-            System.out.println("Resume with " + r.getUuid() + " already exists!");
-        }
+    protected void fillDeletedElement(int index) {
+        storage[index] = storage[size - 1];
     }
 
     @Override
-    public int getIndex(String uuid) {
-        int index = -1;
+    protected void insertElement(Resume r, int index) {
+        storage[size] = r;
+    }
+
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                index = i;
-                break;
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 }
-
