@@ -9,9 +9,7 @@ import static org.junit.Assert.*;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
 
-    @BeforeClass
-    public static void  init() {
-        storage = new ArrayStorage();
+    public ArrayStorageTest() {
+        super(new ArrayStorage());
     }
-
 }

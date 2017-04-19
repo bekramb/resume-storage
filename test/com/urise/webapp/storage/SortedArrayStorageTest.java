@@ -6,9 +6,8 @@ import static org.junit.Assert.*;
 
 public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
-    @BeforeClass
-    public static void init() {
-        storage = new SortedArrayStorage();
+    public SortedArrayStorageTest() {
+        super(new SortedArrayStorage());
     }
 
 }
