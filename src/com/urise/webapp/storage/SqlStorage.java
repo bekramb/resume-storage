@@ -3,7 +3,10 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.Section;
+import com.urise.webapp.model.SectionType;
 import com.urise.webapp.sql.SqlHelper;
+import com.urise.webapp.util.JsonParser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -141,7 +144,7 @@ public class SqlStorage implements Storage {
             r.addContact(ContactType.valueOf(rs.getString("type")), value);
         }
     }
-    
+
     private void insertSections(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO section (resume_uuid, type, content) VALUES (?,?,?)")) {
             for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
@@ -153,17 +156,24 @@ public class SqlStorage implements Storage {
             }
             ps.executeBatch();
         }
-   }
+    }
+
     private void deleteSections(Connection conn, Resume r) throws SQLException {
         deleteAttributes(conn, r, "DELETE  FROM section WHERE resume_uuid=?");
     }
-    
-    
+
+    private void deleteAttributes(Connection conn, Resume r, String sql) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, r.getUuid());
+            ps.execute();
+        }
+    }
+
     private void addSection(ResultSet rs, Resume r) throws SQLException {
         String content = rs.getString("content");
         if (content != null) {
-        SectionType type = SectionType.valueOf(rs.getString("type"));
-        r.setSection(type, JsonParser.read(content, Section.class))
+            SectionType type = SectionType.valueOf(rs.getString("type"));
+            r.addSection(type, JsonParser.read(content, Section.class));
         }
-    } 
+    }
 }                                                                      
