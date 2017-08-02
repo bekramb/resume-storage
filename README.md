@@ -1,5 +1,7 @@
 ## [Программа курса](Program.md)
 
+### Приложение развернуто по адресу https://myresumesch.herokuapp.com/resume
+
 ### Обзор проекта. Обучение Java. Выбор курса.
 [![Видео вступительного занятия](https://img.youtube.com/vi/rUUhWUpzpUM/0.jpg)](https://www.youtube.com/watch?v=rUUhWUpzpUM)
 
